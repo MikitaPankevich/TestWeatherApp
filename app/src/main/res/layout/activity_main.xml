@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewTodayOrCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/viewGradient"
+                android:textSize="28sp"
+                android:textAlignment="center"
+                android:textStyle="italic"
+                tools:text="Today" />
+
+            <View
+                android:id="@+id/viewGradient"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/textViewTodayOrCity"
+                app:layout_constraintBottom_toTopOf="@id/myNavHostFragment"
+                android:background="@drawable/gradient_color"/>
+
+            <fragment
+                android:id="@+id/myNavHostFragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/viewGradient"
+                app:layout_constraintBottom_toTopOf="@id/viewNonGradient"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/navigation" />
+
+            <View
+                android:id="@+id/viewNonGradient"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toBottomOf="@id/myNavHostFragment"
+                app:layout_constraintBottom_toTopOf="@id/imageViewToday"
+                android:background="@color/colorPrimaryDark"/>
+
+
+        <ImageView
+            android:id="@+id/imageViewToday"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintTop_toBottomOf="@id/viewNonGradient"
+            app:layout_constraintBottom_toTopOf="@id/textViewToday"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imageViewForecast"
+            app:srcCompat="@drawable/weather_sunny"/>
+
+        <ImageView
+            android:id="@+id/imageViewForecast"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintTop_toBottomOf="@id/viewNonGradient"
+            app:layout_constraintBottom_toTopOf="@id/textViewForecast"
+            app:layout_constraintStart_toEndOf="@id/imageViewToday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/weather_partly_rainy" />
+
+            <TextView
+                android:id="@+id/textViewForecast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                app:layout_constraintTop_toBottomOf="@id/imageViewForecast"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/imageViewForecast"
+                app:layout_constraintRight_toRightOf="@id/imageViewForecast"
+                android:text="@string/forecast" />
+
+            <TextView
+                android:id="@+id/textViewToday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                app:layout_constraintTop_toBottomOf="@id/imageViewToday"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/imageViewToday"
+                app:layout_constraintRight_toRightOf="@id/imageViewToday"
+                android:text="@string/today" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</layout>
