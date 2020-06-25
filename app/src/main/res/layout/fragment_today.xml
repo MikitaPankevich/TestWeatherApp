@@ -18,7 +18,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/weather_sunny"/>
+            app:srcCompat="@drawable/weather_sunny_yellow"/>
 
         <TextView
             android:id="@+id/textViewCityAndCountry"
@@ -67,7 +67,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/viewFirstHalfLine"
             app:layout_constraintEnd_toStartOf="@+id/imageViewRainfall"
-            app:srcCompat="@android:drawable/btn_star" />
+            app:srcCompat="@drawable/weather_rainy" />
 
         <ImageView
             android:id="@+id/imageViewRainfall"
@@ -77,7 +77,7 @@
             app:layout_constraintStart_toEndOf="@+id/imageViewHumidity"
             app:layout_constraintTop_toBottomOf="@+id/viewFirstHalfLine"
             app:layout_constraintEnd_toStartOf="@+id/imageViewPressure"
-            app:srcCompat="@android:drawable/btn_star_big_on" />
+            app:srcCompat="@drawable/water" />
 
         <ImageView
             android:id="@+id/imageViewPressure"
@@ -88,7 +88,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageViewRainfall"
             app:layout_constraintTop_toBottomOf="@+id/viewFirstHalfLine"
-            app:srcCompat="@android:drawable/btn_star_big_on" />
+            app:srcCompat="@drawable/temperature_celsius" />
 
         <TextView
             android:id="@+id/textViewHumidity"
@@ -125,7 +125,7 @@
             app:layout_constraintEnd_toStartOf="@+id/imageViewCompass"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewRainfall"
-            app:srcCompat="@android:drawable/btn_star_big_on" />
+            app:srcCompat="@drawable/weather_windy" />
 
         <ImageView
             android:id="@+id/imageViewCompass"
@@ -135,7 +135,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewRainfall"
             app:layout_constraintStart_toEndOf="@id/imageViewWind"
-            app:srcCompat="@android:drawable/btn_star_big_on" />
+            app:srcCompat="@drawable/compass_dark" />
 
         <TextView
             android:id="@+id/textViewSpeedOfWind"

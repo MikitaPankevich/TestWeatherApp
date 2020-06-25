@@ -61,7 +61,7 @@
             app:layout_constraintBottom_toTopOf="@id/textViewToday"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/imageViewForecast"
-            app:srcCompat="@drawable/weather_sunny"/>
+            app:srcCompat="@drawable/weather_sunny_blue"/>
 
         <ImageView
             android:id="@+id/imageViewForecast"
@@ -71,7 +71,7 @@
             app:layout_constraintBottom_toTopOf="@id/textViewForecast"
             app:layout_constraintStart_toEndOf="@id/imageViewToday"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/weather_partly_rainy" />
+            app:srcCompat="@drawable/weather_partly_rainy_black" />
 
             <TextView
                 android:id="@+id/textViewForecast"
@@ -89,10 +89,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
+
                 app:layout_constraintTop_toBottomOf="@id/imageViewToday"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="@id/imageViewToday"
                 app:layout_constraintRight_toRightOf="@id/imageViewToday"
+                android:textColor="@color/colorLightBlue"
                 android:text="@string/today" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

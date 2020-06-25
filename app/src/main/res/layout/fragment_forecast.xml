@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.android.navigation.ForecastFragment">
 
-    <androidx.appcompat.app.AlertController.RecycleListView
-        android:id="@+id/titleConstraint"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewFragmentForecast"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </androidx.appcompat.app.AlertController.RecycleListView>
+    </androidx.recyclerview.widget.RecyclerView>
 </layout>
