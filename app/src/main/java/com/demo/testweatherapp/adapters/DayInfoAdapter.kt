@@ -3,6 +3,7 @@ package com.demo.testweatherapp.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.testweatherapp.R
 import com.demo.testweatherapp.pojo.Info
@@ -12,14 +13,14 @@ import java.util.*
 class DayInfoAdapter: RecyclerView.Adapter<DayInfoAdapter.DayInfoViewHolder>() {
 
 
-    var fiveDayInfoList : List<Info> = listOf()
+    private var fiveDayInfoList : List<Info> = listOf()
     set(value) {
         field = value
         notifyDataSetChanged()
     }
 
     inner class DayInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val tvDayOfWeek = itemView.textViewDayOfWeek
+        val tvDayOfWeek: TextView = itemView.textViewDayOfWeek
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayInfoViewHolder {

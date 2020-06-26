@@ -12,8 +12,8 @@
 
         <ImageView
             android:id="@+id/imageViewWeatherPicture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginTop="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/imageViewWeatherPicture"
             app:layout_constraintEnd_toEndOf="parent"
@@ -119,8 +119,8 @@
 
         <ImageView
             android:id="@+id/imageViewWind"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_margin="8dp"
             app:layout_constraintEnd_toStartOf="@+id/imageViewCompass"
             app:layout_constraintStart_toStartOf="parent"
@@ -129,13 +129,13 @@
 
         <ImageView
             android:id="@+id/imageViewCompass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_margin="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewRainfall"
             app:layout_constraintStart_toEndOf="@id/imageViewWind"
-            app:srcCompat="@drawable/compass_dark" />
+            app:srcCompat="@drawable/compass_yellow" />
 
         <TextView
             android:id="@+id/textViewSpeedOfWind"
@@ -160,7 +160,7 @@
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             app:layout_constraintTop_toBottomOf="@id/textViewCompassDirection"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -173,9 +173,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/share"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
