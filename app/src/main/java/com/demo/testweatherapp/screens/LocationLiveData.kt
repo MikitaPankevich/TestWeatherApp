@@ -23,8 +23,8 @@ class LocationLiveData(context: Context) : LiveData<LocationModel>() {
 
     companion object {
         val locationRequest: LocationRequest = LocationRequest.create().apply {
-            interval = 10000
-            fastestInterval = 5000
+            interval = 300000
+            fastestInterval = 300000
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
     }

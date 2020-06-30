@@ -11,6 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <View
+            android:id="@+id/viewForecastItemUpLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="5dp"
+            android:background="@color/colorPrimaryDark"/>
+
         <TextView
             android:id="@+id/textViewDayOfWeek"
             android:layout_width="wrap_content"
@@ -18,33 +26,21 @@
             tools:text="Today"
             android:textAllCaps="true"
             android:textStyle="italic"
+            android:gravity="center_vertical"
 
             android:textSize="24sp"
-            android:layout_margin="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/viewForecastItemUpLine"
+            app:layout_constraintBottom_toTopOf="@id/viewForecastItemBottomLine"/>
         <View
-            android:id="@+id/viewForecastItemFirstLine"
+            android:id="@+id/viewForecastItemBottomLine"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginTop="5dp"
             app:layout_constraintTop_toBottomOf="@id/textViewDayOfWeek"
             android:background="@color/colorPrimaryDark"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewHoursInDay"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/viewForecastItemFirstLine" />
 
-        <View
-            android:id="@+id/viewForecastItemSecondLine"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            app:layout_constraintTop_toBottomOf="@id/recyclerViewHoursInDay"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@color/colorPrimaryDark"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

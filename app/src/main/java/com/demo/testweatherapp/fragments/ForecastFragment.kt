@@ -1,27 +1,43 @@
 package com.demo.testweatherapp.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.demo.testweatherapp.R
+import com.demo.testweatherapp.adapters.DayInfoAdapter
 import com.demo.testweatherapp.databinding.FragmentForecastBinding
+import com.demo.testweatherapp.pojo.Info
+import com.demo.testweatherapp.screens.DataProviderManager
+import com.demo.testweatherapp.screens.WeatherView
 import kotlinx.android.synthetic.main.fragment_forecast.*
+
 
 /**
  * A simple [Fragment] subclass.
  */
 class ForecastFragment : Fragment() {
 
+    private lateinit var adapter: DayInfoAdapter
+
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: FragmentForecastBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_forecast, container, false)
-        return binding.root;
+        return binding.root
     }
+
 
     override fun onResume() {
         super.onResume()
+        recyclerViewFragmentForecast.layoutManager = LinearLayoutManager(this.context)
+        adapter = DayInfoAdapter(this.context, DataProviderManager.base!!.list)
+        recyclerViewFragmentForecast.adapter = adapter
     }
+
+
 }

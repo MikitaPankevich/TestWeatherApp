@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    android:label="@string/hello_blank_fragment"
     app:startDestination="@id/todayFragment">
 
     <fragment
         android:id="@+id/todayFragment"
         android:name="com.demo.testweatherapp.fragments.TodayFragment"
-        android:label="TodayFragment" >
+        android:label="TodayFragment">
         <action
             android:id="@+id/action_todayFragment_to_forecastFragment"
             app:destination="@id/forecastFragment" />
@@ -14,7 +17,7 @@
     <fragment
         android:id="@+id/forecastFragment"
         android:name="com.demo.testweatherapp.fragments.ForecastFragment"
-        android:label="ForecastFragment" >
+        android:label="ForecastFragment">
         <action
             android:id="@+id/action_forecastFragment_to_todayFragment"
             app:destination="@id/todayFragment" />
