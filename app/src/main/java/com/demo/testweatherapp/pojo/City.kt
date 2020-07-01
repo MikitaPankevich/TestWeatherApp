@@ -2,22 +2,22 @@ package com.demo.testweatherapp.pojo
 
 import com.google.gson.annotations.SerializedName
 
-data class City (
+data class City(
 
     @SerializedName("id")
-    val id : Int,
+    val id: Int,
     @SerializedName("name")
-    val name : String,
+    val name: String,
     @SerializedName("coord")
-    val coord : Coord,
+    val coord: Coord,
     @SerializedName("country")
-    val country : String,
+    val country: String,
     @SerializedName("population")
-    val population : Int,
+    val population: Int,
     @SerializedName("timezone")
-    val timezone : Int,
+    val timezone: Int,
     @SerializedName("sunrise")
-    val sunrise : Int,
+    val sunrise: Int,
     @SerializedName("sunset")
-    val sunset : Int
+    val sunset: Int
 )

@@ -2,11 +2,12 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imageViewForecastWeatherPicture"
@@ -21,30 +22,47 @@
             android:id="@+id/textViewHours"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            tools:text="13:00"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/textViewCurrentWeather"
             app:layout_constraintStart_toEndOf="@+id/imageViewForecastWeatherPicture"
-            app:layout_constraintBottom_toTopOf="@id/textViewCurrentWeather"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="13:00" />
 
         <TextView
             android:id="@+id/textViewCurrentWeather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            tools:text="Rain Showers"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageViewForecastWeatherPicture"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:layout_marginTop="5dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/textViewHours"
+            app:layout_constraintTop_toBottomOf="@id/textViewHours"
+            tools:text="Rain Showers" />
 
         <TextView
             android:id="@+id/textViewTemperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="22*"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/colorPrimary"
             android:textSize="40sp"
+            android:paddingBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="22*" />
+
+        <View
+            android:id="@+id/viewBottomLine"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#83857C"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/textViewHours"
+            app:layout_constraintTop_toBottomOf="@id/textViewTemperature" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

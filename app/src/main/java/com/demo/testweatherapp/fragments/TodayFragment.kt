@@ -1,23 +1,21 @@
 package com.demo.testweatherapp.fragments
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.databinding.DataBindingUtil
+import android.widget.TextView
+import androidx.databinding.DataBindingUtil.inflate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.demo.testweatherapp.R
+import com.demo.testweatherapp.data.WeatherPresenter
+import com.demo.testweatherapp.data.WeatherView
 import com.demo.testweatherapp.databinding.FragmentTodayBinding
-import com.demo.testweatherapp.pojo.Info
-import com.demo.testweatherapp.screens.DataProviderManager
-import com.demo.testweatherapp.screens.LocationViewModel
-import com.demo.testweatherapp.screens.WeatherView
-import com.squareup.picasso.Picasso
+import com.demo.testweatherapp.data.DataProviderManager
+import com.demo.testweatherapp.location.LocationViewModel
 import kotlinx.android.synthetic.main.fragment_today.*
-import java.util.*
 import kotlin.math.roundToInt
 
 /**
@@ -25,7 +23,7 @@ import kotlin.math.roundToInt
  */
 class TodayFragment : Fragment(), WeatherView {
 
-    private  lateinit var locationViewModel: LocationViewModel
+    private lateinit var locationViewModel: LocationViewModel
     private lateinit var presenter: WeatherPresenter
 
     override fun onCreateView(
@@ -34,7 +32,9 @@ class TodayFragment : Fragment(), WeatherView {
         savedInstanceState: Bundle?
     ): View? {
         val binding: FragmentTodayBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_today, container, false)
+            inflate(inflater, R.layout.fragment_today, container, false)
+
+
         return binding.root;
     }
 
@@ -44,10 +44,36 @@ class TodayFragment : Fragment(), WeatherView {
         })
     }
 
+
+    private fun shareData(){
+        val textViewShare =  this.view?.findViewById<TextView>(R.id.textViewShare)
+        textViewShare?.setOnClickListener {
+            if (DataProviderManager.base != null) {
+                startActivity(getShareIntent())
+            }
+        }
+    }
+
+
+    private fun getShareIntent(): Intent {
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        DataProviderManager.base?.let {
+            shareIntent.setType("text/plain").putExtra(
+                Intent.EXTRA_INTENT, "\n Current weather in ${it.city.name.capitalize()} \n " +
+                        "Temperature: ${(it.list[0].main.temp - 273.15).roundToInt()} \n " +
+                        "Humidity: ${it.list[0].main.humidity} \n " +
+                        "Speed of wind: ${it.list[0].wind.speed.roundToInt()}"
+            )
+        }
+        return shareIntent
+    }
+
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         locationViewModel = ViewModelProviders.of(this).get(LocationViewModel::class.java)
         presenter = WeatherPresenter(this)
+        shareData()
     }
 
     override fun onResume() {
@@ -56,11 +82,13 @@ class TodayFragment : Fragment(), WeatherView {
     }
 
     override fun showData() {
-        Log.d("TEST_OF_SINGLE_SHOWDATA",  DataProviderManager.base?.list.toString())
         DataProviderManager.base?.let {
-
             val description: String? = it.list[0].weather[0].description
-            chooseImage(imageViewWeatherPicture, it.list[0].weather[0].main)
+            DataProviderManager.chooseImage(
+                imageViewWeatherPicture,
+                it.list[0].weather[0].main,
+                DataProviderManager.getTime(it.list[0].dt_txt)
+            )
             if (it.city.name != null && it.city.country != null) {
                 textViewCityAndCountry.text = "%s, %s".format(it.city.name, it.city.country)
             } else {
@@ -92,23 +120,5 @@ class TodayFragment : Fragment(), WeatherView {
         }
     }
 
-    private fun chooseImage(imageView: ImageView, weather: String?) {
-        when (weather) {
-            "Clear" -> Picasso.get().load(R.drawable.weather_sunny_yellow).into(imageView)
-            "Clouds" -> Picasso.get().load(R.drawable.weather_cloudy).into(imageView)
-            "Drizzle" -> Picasso.get().load(R.drawable.weather_rainy).into(imageView)
-            "Rain" -> Picasso.get().load(R.drawable.weather_partly_rainy_yellow).into(imageView)
-            "Thunderstorm" -> Picasso.get().load(R.drawable.weather_lightning).into(imageView)
-            "Snow" -> Picasso.get().load(R.drawable.weather_snowy_heavy).into(imageView)
-            "Mist" -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-            "Smoke" -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-            "Haze" -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-            "Dust" -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-            "Fog" -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-            "Sand" -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-            "Ash" -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-            "Squall" -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-            "Tornado" -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-        }
-    }
+
 }

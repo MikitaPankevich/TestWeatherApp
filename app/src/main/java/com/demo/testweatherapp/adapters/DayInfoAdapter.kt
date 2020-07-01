@@ -1,107 +1,91 @@
 package com.demo.testweatherapp.adapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.testweatherapp.R
 import com.demo.testweatherapp.pojo.Info
-import com.demo.testweatherapp.screens.DataProviderManager
+import com.demo.testweatherapp.data.DataProviderManager
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
 
 
-class DayInfoAdapter(context: Context?, info: List<Info>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DayInfoAdapter(context: Context?, info: List<Info>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var context: Context? = context
-    private var index = 0
 
     private val TYPE_DAY = 1
     private val TYPE_HOURS = 2
 
-    private var fiveDayInfoList : List<Info> = info
+    private var fiveDayInfoList: List<Info> = info
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
 
-
-
-
     internal class DayViewHolder(@NonNull itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val txtDayOfWeek : TextView = itemView.findViewById<TextView>(R.id.textViewDayOfWeek)
+        private val txtDayOfWeek: TextView = itemView.findViewById(R.id.textViewDayOfWeek)
+        private val txtHour: TextView = itemView.findViewById(R.id.textViewHoursDayItem)
+        private val imgPicDayItem: ImageView =
+            itemView.findViewById(R.id.imageViewForecastWeatherPictureDayItem)
+        private val txtWeatherDescription: TextView =
+            itemView.findViewById(R.id.textViewCurrentWeatherDayItem)
+        private val txtTempDayItem: TextView =
+            itemView.findViewById(R.id.textViewTemperatureDayItem)
 
         internal fun setDayDetails(info: Info) {
-           // val sdf = SimpleDateFormat("EEEE")
-          //  val d = Date()
-            //val currentDayOfTheWeek: String = sdf.format(d)
-            var millis = info.dt.toLong()
-            var time : Calendar = Calendar.getInstance()
-            time.timeInMillis = millis;
-            var dayOfWeek = time.get(Calendar.DAY_OF_WEEK)
-            //if (dayOfWeek == currentDay){
-           // holder.tvDayOfWeek.text = R.string.today.toString()
-       // } else {
-            Log.d("TEST_OF_ADAPTER", info.toString())
-            when(dayOfWeek){
-                Calendar.MONDAY -> txtDayOfWeek.text = "MONDAY"
-                Calendar.TUESDAY -> txtDayOfWeek.text = "TUESDAY"
-                Calendar.WEDNESDAY -> txtDayOfWeek.text = "WEDNESDAY"
-                Calendar.THURSDAY -> txtDayOfWeek.text = "THURSDAY"
-                Calendar.FRIDAY -> txtDayOfWeek.text = "FRIDAY"
-                Calendar.SATURDAY -> txtDayOfWeek.text = "SATURDAY"
-                Calendar.SUNDAY -> txtDayOfWeek.text = "SUNDAY"
-            }
-
-
+            txtDayOfWeek.text = getDayOfWeek(info.dt_txt.dropLast(9))
+            txtHour.text = DataProviderManager.getTime(info.dt_txt)
+            txtWeatherDescription.text = info.weather[0].description.capitalize()
+            DataProviderManager.chooseImage(imgPicDayItem, info.weather[0].main, DataProviderManager.getTime(info.dt_txt))
+            txtTempDayItem.text = (info.main.temp - 273.15).roundToInt().toString() + "°"
         }
 
     }
 
     internal class HoursViewHolder(@NonNull itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val txtHours : TextView = itemView.findViewById<TextView>(R.id.textViewHours)
-        private val imgWeatherPic : ImageView = itemView.findViewById<ImageView>(R.id.imageViewForecastWeatherPicture)
-        private val txtCurrentWeather : TextView = itemView.findViewById<TextView>(R.id.textViewCurrentWeather)
-        private val txtTemperature : TextView = itemView.findViewById<TextView>(R.id.textViewTemperature)
+        private val txtHours: TextView = itemView.findViewById(R.id.textViewHours)
+        private val imgWeatherPic: ImageView =
+            itemView.findViewById(R.id.imageViewForecastWeatherPicture)
+        private val txtCurrentWeather: TextView =
+            itemView.findViewById(R.id.textViewCurrentWeather)
+        private val txtTemperature: TextView =
+            itemView.findViewById(R.id.textViewTemperature)
+        private val viewLine: View = itemView.findViewById(R.id.viewBottomLine)
 
         internal fun setHoursDetails(info: Info) {
+            txtHours.text = DataProviderManager.getTime(info.dt_txt)
+            txtTemperature.text = (info.main.temp - 273.15).roundToInt().toString() + "°"
+            txtCurrentWeather.text = info.weather[0].description.capitalize()
+            DataProviderManager.chooseImage(imgWeatherPic, info.weather[0].main, DataProviderManager.getTime(info.dt_txt))
+            viewLine.isVisible = DataProviderManager.getTime(info.dt_txt) != "21:00"
 
-            txtHours.text = getTime(info.dt).toString()
-            txtTemperature.text = (info.main.temp-273.15).roundToInt().toString()
         }
     }
 
     override fun getItemViewType(position: Int): Int {
 
-        if (index.equals(0)){
+        if (position + 1 < fiveDayInfoList.size && fiveDayInfoList[position + 1].dt_txt.drop(11)
+                .dropLast(6) == "03"
+        ) {
             return TYPE_DAY
         } else {
             return TYPE_HOURS
         }
-
-//        val sdf = SimpleDateFormat("EEEE")
-//        val d = Date()
-//        val currentDayOfTheWeek: String = sdf.format(d)
-//
-//        var millis = fiveDayInfoList[0].dt.toLong()
-//
-//        var time : Calendar = Calendar.getInstance()
-//        time.timeInMillis = millis;
-//        var dayOfWeek = time.get(Calendar.)
-//        if (currentDayOfTheWeek == dayOfWeek)
-
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view: View
+        var view: View
         return if (viewType == TYPE_DAY) { // for day layout
             view = LayoutInflater.from(context).inflate(R.layout.forecast_day_item, parent, false)
             DayViewHolder(view)
@@ -112,48 +96,26 @@ class DayInfoAdapter(context: Context?, info: List<Info>): RecyclerView.Adapter<
     }
 
 
-
-
     override fun getItemCount() = fiveDayInfoList.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
+
         if (getItemViewType(position) == TYPE_DAY) {
-            (holder as DayViewHolder).setDayDetails(fiveDayInfoList.get(position))
+            (holder as DayViewHolder).setDayDetails(fiveDayInfoList[position])
         } else {
-            (holder as HoursViewHolder).setHoursDetails(fiveDayInfoList.get(position))
+            (holder as HoursViewHolder).setHoursDetails(fiveDayInfoList[position])
         }
 
 
-
-
-
-
-//        val c : Calendar = Calendar.getInstance()
-//        val currentDay = c[Calendar.DAY_OF_WEEK]
-//        c.timeInMillis = fiveDayInfoList[position].dt.toLong()
-//        val dayOfWeek = c.get(Calendar.DAY_OF_WEEK)
-//        if (dayOfWeek == currentDay){
-//            holder.tvDayOfWeek.text = R.string.today.toString()
-//        } else {
-//            when(dayOfWeek){
-//                Calendar.MONDAY -> holder.tvDayOfWeek.text = "MONDAY"
-//                Calendar.TUESDAY -> holder.tvDayOfWeek.text = "TUESDAY"
-//                Calendar.WEDNESDAY -> holder.tvDayOfWeek.text = "WEDNESDAY"
-//                Calendar.THURSDAY -> holder.tvDayOfWeek.text = "THURSDAY"
-//                Calendar.FRIDAY -> holder.tvDayOfWeek.text = "FRIDAY"
-//                Calendar.SATURDAY -> holder.tvDayOfWeek.text = "SATURDAY"
-//                Calendar.SUNDAY -> holder.tvDayOfWeek.text = "SUNDAY"
-//            }
-//        }
-
-
     }
+
+
 }
 
-fun getTime(date: Int) : Int {
 
-        val c : Calendar = Calendar.getInstance()
-        c.timeInMillis = date.toLong()
-    return c[Calendar.HOUR_OF_DAY]
-
+fun getDayOfWeek(data: String): String {
+    val date: Date = SimpleDateFormat("yyyy-MM-dd").parse(data)
+    val dayFormate: DateFormat = SimpleDateFormat("EEEE")
+    return dayFormate.format(date)
 }

@@ -1,4 +1,4 @@
-package com.demo.testweatherapp.screens
+package com.demo.testweatherapp.location
 
 import android.annotation.SuppressLint
 import android.content.Context

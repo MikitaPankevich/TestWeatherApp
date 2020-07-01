@@ -2,22 +2,22 @@ package com.demo.testweatherapp.pojo
 
 import com.google.gson.annotations.SerializedName
 
-data class Info (
+data class Info(
 
     @SerializedName("dt")
-    val dt : Int,
+    val dt: Int,
     @SerializedName("main")
-    val main : Main,
+    val main: Main,
     @SerializedName("weather")
-    val weather : List<Weather>,
+    val weather: List<Weather>,
     @SerializedName("clouds")
-    val clouds : Clouds,
+    val clouds: Clouds,
     @SerializedName("wind")
-    val wind : Wind,
+    val wind: Wind,
     @SerializedName("rain")
-    val rain : Rain,
+    val rain: Rain,
     @SerializedName("sys")
-    val sys : Sys,
+    val sys: Sys,
     @SerializedName("dt_txt")
-    val dt_txt : String
+    val dt_txt: String
 )

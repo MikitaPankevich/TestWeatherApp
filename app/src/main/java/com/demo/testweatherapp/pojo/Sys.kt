@@ -2,8 +2,8 @@ package com.demo.testweatherapp.pojo
 
 import com.google.gson.annotations.SerializedName
 
-data class Sys (
+data class Sys(
 
     @SerializedName("pod")
-    val pod : String
+    val pod: String
 )

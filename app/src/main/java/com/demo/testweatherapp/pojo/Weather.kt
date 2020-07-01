@@ -2,14 +2,14 @@ package com.demo.testweatherapp.pojo
 
 import com.google.gson.annotations.SerializedName
 
-data class Weather (
+data class Weather(
 
     @SerializedName("id")
-    val id : Int,
+    val id: Int,
     @SerializedName("main")
-    val main : String,
+    val main: String,
     @SerializedName("description")
-    val description : String,
+    val description: String,
     @SerializedName("icon")
-    val icon : String
+    val icon: String
 )

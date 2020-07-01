@@ -14,9 +14,9 @@ interface ApiService {
         @Query(LONGITUDE) lon: Double
     ): Single<Base>
 
-    companion object{
+    companion object {
         private const val API_KEY = "appid"
         private const val LATITUDE = "lat"
-        private const val LONGITUDE= "lon"
+        private const val LONGITUDE = "lon"
     }
 }

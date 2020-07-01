@@ -2,75 +2,72 @@ package com.demo.testweatherapp.screens
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.demo.testweatherapp.R
+import com.demo.testweatherapp.data.DataProviderManager
 import com.demo.testweatherapp.databinding.ActivityMainBinding
-import com.demo.testweatherapp.fragments.WeatherPresenter
-import com.demo.testweatherapp.pojo.Info
+import com.demo.testweatherapp.data.WeatherPresenter
+import com.demo.testweatherapp.data.WeatherView
+import com.demo.testweatherapp.location.LocationViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity(),
+    WeatherView {
 
 
     private var LOCATION_REQUEST = 100
 
-    private var currentCity: String = ""
     private var isStartFragment = true
     private lateinit var locationViewModel: LocationViewModel
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private lateinit var navController : NavController
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var navController: NavController
+    private lateinit var presenter: WeatherPresenter
 
 
+    private var mLastLocation: Location? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         locationViewModel = ViewModelProviders.of(this).get(LocationViewModel::class.java)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-
-        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        val binding =
+            DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         navController = Navigation.findNavController(this, R.id.myNavHostFragment)
         binding.imageViewForecast.setOnClickListener {
-            Log.d("CURRENT_DEST" , navController.currentDestination?.navigatorName )
             navController.navigate(R.id.action_todayFragment_to_forecastFragment)
             changeFragment()
+
         }
-       // androidx.navigation.fragment.FragmentNavigator$Destination@34abdd9
         binding.imageViewToday.setOnClickListener {
-            Log.d("CURRENT_DEST" , navController.currentDestination?.navigatorName )
             navController.navigate(R.id.action_forecastFragment_to_todayFragment)
             changeFragment()
         }
-        startLocationUpdate()
+
+        presenter = WeatherPresenter(this)
+        imageViewToday.isClickable = false
+        imageViewForecast.isClickable = false
     }
 
 
-    private fun startLocationUpdate() {
-        locationViewModel.getLocationData().observe(this, Observer {
-
-        })
-    }
-
-
-
-    private fun changeFragment(){
-        if (isStartFragment){
-            textViewTodayOrCity.text = currentCity
+    private fun changeFragment() {
+        if (isStartFragment) {
+            textViewTodayOrCity.text = DataProviderManager.base?.city?.name
             textViewToday.setTextColor(resources.getColor(R.color.black))
             textViewForecast.setTextColor(resources.getColor(R.color.colorLightBlue))
             Picasso.get().load(R.drawable.weather_sunny_black).into(imageViewToday)
@@ -90,57 +87,88 @@ class MainActivity : AppCompatActivity(){
         }
     }
 
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            invokeLocationAction()
-        }
-    }
-
-    private fun invokeLocationAction() {
-        when {
-            isPermissionsGranted() -> startLocationUpdate()
-            shouldShowRequestPermissionRationale() -> Toast.makeText(this, "App requires location permission", Toast.LENGTH_SHORT)
-                .show()
-            else -> ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
-                LOCATION_REQUEST
-            )
-        }
-    }
-
-    private fun shouldShowRequestPermissionRationale() =
-        ActivityCompat.shouldShowRequestPermissionRationale(
-            this,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) && ActivityCompat.shouldShowRequestPermissionRationale(
+    private fun checkPermissions(): Boolean {
+        val permissionState = ActivityCompat.checkSelfPermission(
             this,
             Manifest.permission.ACCESS_COARSE_LOCATION
         )
+        return permissionState == PackageManager.PERMISSION_GRANTED
+    }
 
-    private fun isPermissionsGranted() =
-        ActivityCompat.checkSelfPermission(
-            this,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
+    private fun startLocationPermissionRequest() {
+        ActivityCompat.requestPermissions(
+            this@MainActivity,
+            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+            LOCATION_REQUEST
+        )
+    }
+
+    public override fun onStart() {
+        super.onStart()
+
+        if (!checkPermissions()) {
+            requestPermissions()
+        } else {
+            getLastLocation()
+        }
+    }
 
     @SuppressLint("MissingPermission")
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            LOCATION_REQUEST -> {
-                invokeLocationAction()
+    private fun getLastLocation() {
+        fusedLocationProviderClient.lastLocation
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful && task.result != null) {
+                    mLastLocation = task.result
+                    presenter.loadData(mLastLocation!!.latitude, mLastLocation!!.longitude)
+                } else {
+                    Log.d("TEST_ERROOR", task.result.toString())
+                    Toast.makeText(
+                        this,
+                        "Please, turn on Location and try again",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
+    }
+
+
+    private fun requestPermissions() {
+        val shouldProvideRationale = ActivityCompat.shouldShowRequestPermissionRationale(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+        if (shouldProvideRationale) {
+            showToast("Access to geolocation is necessary for the app efficiency.",
+                android.R.string.ok,
+                View.OnClickListener {
+                    startLocationPermissionRequest()
+                })
+        } else {
+            startLocationPermissionRequest()
         }
     }
 
 
+    private fun showToast(
+        mainTextStringId: String, actionStringId: Int,
+        listener: View.OnClickListener
+    ) {
+        val contextView = findViewById<View>(R.id.constLayoutMainActivity)
+        Snackbar.make(contextView, mainTextStringId, Snackbar.LENGTH_INDEFINITE)
+            .setAction("Try again") {
+                listener
+            }
+            .show()
+    }
+
+    override fun showData() {
+        imageViewForecast.isClickable = true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.disposeDisposable()
+    }
 }
 
 
