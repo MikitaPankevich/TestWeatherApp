@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.demo.testweatherapp.R
 import com.demo.testweatherapp.adapters.DayInfoAdapter
-import com.demo.testweatherapp.databinding.FragmentForecastBinding
 import com.demo.testweatherapp.data.DataProviderManager
+import com.demo.testweatherapp.databinding.FragmentForecastBinding
 import kotlinx.android.synthetic.main.fragment_forecast.*
 
 

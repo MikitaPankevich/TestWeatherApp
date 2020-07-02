@@ -16,9 +16,9 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.demo.testweatherapp.R
 import com.demo.testweatherapp.data.DataProviderManager
-import com.demo.testweatherapp.databinding.ActivityMainBinding
 import com.demo.testweatherapp.data.WeatherPresenter
 import com.demo.testweatherapp.data.WeatherView
+import com.demo.testweatherapp.databinding.ActivityMainBinding
 import com.demo.testweatherapp.location.LocationViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -121,7 +121,13 @@ class MainActivity : AppCompatActivity(),
                     mLastLocation = task.result
                     presenter.loadData(mLastLocation!!.latitude, mLastLocation!!.longitude)
                 } else {
-                    Log.d("TEST_ERROOR", task.result.toString())
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // делаем что-то, если геолокация не включена
+                        ActivityCompat.requestPermissions(this,
+                            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_REQUEST)
+                    }
+                    Log.d("TEST_ERROR", task.result.toString())
                     Toast.makeText(
                         this,
                         "Please, turn on Location and try again",

@@ -10,10 +10,10 @@ import androidx.databinding.DataBindingUtil.inflate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.demo.testweatherapp.R
+import com.demo.testweatherapp.data.DataProviderManager
 import com.demo.testweatherapp.data.WeatherPresenter
 import com.demo.testweatherapp.data.WeatherView
 import com.demo.testweatherapp.databinding.FragmentTodayBinding
-import com.demo.testweatherapp.data.DataProviderManager
 import com.demo.testweatherapp.location.LocationViewModel
 import kotlinx.android.synthetic.main.fragment_today.*
 import kotlin.math.roundToInt
@@ -45,8 +45,8 @@ class TodayFragment : Fragment(), WeatherView {
     }
 
 
-    private fun shareData(){
-        val textViewShare =  this.view?.findViewById<TextView>(R.id.textViewShare)
+    private fun shareData() {
+        val textViewShare = this.view?.findViewById<TextView>(R.id.textViewShare)
         textViewShare?.setOnClickListener {
             if (DataProviderManager.base != null) {
                 startActivity(getShareIntent())
