@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/todayFragment">
+    app:startDestination="@id/loadingFragment2">
 
     <fragment
         android:id="@+id/todayFragment"
@@ -19,6 +19,15 @@
         android:label="ForecastFragment">
         <action
             android:id="@+id/action_forecastFragment_to_todayFragment"
+            app:destination="@id/todayFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loadingFragment2"
+        android:name="com.demo.testweatherapp.fragments.LoadingFragment"
+        android:label="fragment_loading"
+        tools:layout="@layout/fragment_loading" >
+        <action
+            android:id="@+id/action_loadingFragment2_to_todayFragment"
             app:destination="@id/todayFragment" />
     </fragment>
 </navigation>

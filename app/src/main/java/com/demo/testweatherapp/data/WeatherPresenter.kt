@@ -20,7 +20,7 @@ class WeatherPresenter(private val view: WeatherView) {
                 DataProviderManager.registerDataProvider(it)
                 view.showData()
             }, {
-                view.showError(it.message)
+                view.showError()
             })
         compositeDisposable.add(disposable)
     }

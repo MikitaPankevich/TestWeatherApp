@@ -8,23 +8,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil.inflate
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import com.demo.testweatherapp.R
 import com.demo.testweatherapp.data.DataProviderManager
-import com.demo.testweatherapp.data.WeatherPresenter
-import com.demo.testweatherapp.data.WeatherView
 import com.demo.testweatherapp.databinding.FragmentTodayBinding
-import com.demo.testweatherapp.location.LocationViewModel
 import kotlinx.android.synthetic.main.fragment_today.*
 import kotlin.math.roundToInt
 
 /**
  * A simple [Fragment] subclass.
  */
-class TodayFragment : Fragment(), WeatherView {
+class TodayFragment : Fragment() {
 
-    private lateinit var locationViewModel: LocationViewModel
-    private lateinit var presenter: WeatherPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,15 +27,7 @@ class TodayFragment : Fragment(), WeatherView {
     ): View? {
         val binding: FragmentTodayBinding =
             inflate(inflater, R.layout.fragment_today, container, false)
-
-
         return binding.root;
-    }
-
-    private fun startLocationUpdate() {
-        locationViewModel.getLocationData().observe(this, androidx.lifecycle.Observer {
-            presenter.loadData(it.latitude, it.longitude)
-        })
     }
 
 
@@ -69,19 +55,14 @@ class TodayFragment : Fragment(), WeatherView {
     }
 
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        locationViewModel = ViewModelProviders.of(this).get(LocationViewModel::class.java)
-        presenter = WeatherPresenter(this)
+    override fun onResume() {
+        super.onResume()
+        showData()
         shareData()
     }
 
-    override fun onResume() {
-        super.onResume()
-        startLocationUpdate()
-    }
 
-    override fun showData() {
+    private fun showData() {
         DataProviderManager.base?.let {
             val description: String? = it.list[0].weather[0].description
             DataProviderManager.chooseImage(
