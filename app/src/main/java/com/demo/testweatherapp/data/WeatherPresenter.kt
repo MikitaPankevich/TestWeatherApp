@@ -11,7 +11,6 @@ class WeatherPresenter(private val view: WeatherView) {
     private val compositeDisposable = CompositeDisposable()
     lateinit var data: Base
 
-
     fun loadData(latitude: Double, longitude: Double) {
         val disposable = ApiFactory.apiService.getForecast(lat = latitude, lon = longitude)
             .subscribeOn(Schedulers.io())
@@ -24,8 +23,7 @@ class WeatherPresenter(private val view: WeatherView) {
             })
         compositeDisposable.add(disposable)
     }
-
-
+    
     fun disposeDisposable() {
         compositeDisposable.dispose()
     }

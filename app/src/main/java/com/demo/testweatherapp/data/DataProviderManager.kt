@@ -2,6 +2,7 @@ package com.demo.testweatherapp.data
 
 import android.widget.ImageView
 import com.demo.testweatherapp.R
+import com.demo.testweatherapp.TypeOfWeather
 import com.demo.testweatherapp.pojo.Base
 import com.squareup.picasso.Picasso
 
@@ -14,32 +15,21 @@ object DataProviderManager {
     }
 
     fun chooseImage(imageView: ImageView, weather: String?, time: String) {
-        var time: Int = time.dropLast(3).toInt()
+        //from 03:00 to 03
+        val time: Int = time.dropLast(3).toInt()
         when (weather) {
-            "Clear" -> if (time in 6..20) {
-                Picasso.get().load(R.drawable.weather_sunny_yellow).into(imageView)
-            } else {
-                Picasso.get().load(R.drawable.weather_night).into(imageView)
+            TypeOfWeather.Clear.name -> if (time in 6..20) Picasso.get().load(R.drawable.weather_sun).into(imageView)
+             else Picasso.get().load(R.drawable.weather_moon).into(imageView)
+
+            TypeOfWeather.Clouds.name -> if (time in 6..20) Picasso.get().load(R.drawable.weather_clouds_sun).into(imageView)
+            else Picasso.get().load(R.drawable.weather_cloudy_night).into(imageView)
+
+            TypeOfWeather.Rain.name -> Picasso.get().load(R.drawable.weather_rain).into(imageView)
+            TypeOfWeather.Drizzle.name -> Picasso.get().load(R.drawable.weather_rain).into(imageView)
+            TypeOfWeather.Thunderstorm.name -> Picasso.get().load(R.drawable.weather_thunderstorm).into(imageView)
+            TypeOfWeather.Snow.name -> Picasso.get().load(R.drawable.weather_snow).into(imageView)
+            else -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
             }
-            "Clouds" -> if (time in 6..20) {
-                Picasso.get().load(R.drawable.weather_cloudy).into(imageView)
-            } else {
-                Picasso.get().load(R.drawable.weather_night_partly_cloudy).into(imageView)
-            }
-            "Rain" -> Picasso.get().load(R.drawable.weather_rainy).into(imageView)
-            "Drizzle" -> Picasso.get().load(R.drawable.weather_rainy).into(imageView)
-            "Thunderstorm" -> Picasso.get().load(R.drawable.weather_lightning).into(imageView)
-            "Snow" -> Picasso.get().load(R.drawable.weather_snowy_heavy).into(imageView)
-            "Mist" -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-            "Smoke" -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-            "Haze" -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-            "Dust" -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-            "Fog" -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-            "Sand" -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-            "Ash" -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-            "Squall" -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-            "Tornado" -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-        }
     }
 
 

@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:text="Today"
+            tools:text="Minsk"
             android:textAlignment="center"
             android:textSize="28sp"
             android:textStyle="italic"
@@ -63,7 +63,7 @@
             app:layout_constraintEnd_toStartOf="@id/imageViewForecast"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/viewNonGradient"
-            app:srcCompat="@drawable/weather_sunny_blue" />
+            app:srcCompat="@drawable/weather_today_blue" />
 
         <ImageView
             android:id="@+id/imageViewForecast"
@@ -73,7 +73,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imageViewToday"
             app:layout_constraintTop_toBottomOf="@id/viewNonGradient"
-            app:srcCompat="@drawable/weather_partly_rainy_black" />
+            app:srcCompat="@drawable/weather_forecast_black" />
 
         <TextView
             android:id="@+id/textViewForecast"

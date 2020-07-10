@@ -4,5 +4,20 @@
     <string name="forecast">Forecast</string>
     <string name="today">Today</string>
     <string name="share">Share</string>
+    <string name="timeAfterDayOfWeek">03</string>
+    <string name="dateFormat">yyyy-MM-dd</string>
+    <string name="dayFormat">EEEE</string>
+    <string name="temperatureMark">°</string>
+    <string name="timeBeforeDayOfWeek">21:00</string>
+    <string name="unknown">Unknown</string>
+    <string name="noRainfall">0.0 mm</string>
+    <string name="rainfall">%s mm</string>
+    <string name="pressure">%s hPa</string>
+    <string name="speedOfWind">%s km/h</string>
+    <string name="textToShare">"\n Current weather in %s \n Temperature: %s \n Humidity: %s \n Speed of wind: %s"</string>
+    <string name="typeToShare">text/plain</string>
+    <string name="locationPermission">App require location permission. Please turn on in Settings and try again.</string>
+    <string name="locationData">App require Location. Please turn on and restart.</string>
+    <string name="loadDataError">Failed to load data. Please check Internet and try again.</string>
 
 </resources>

@@ -23,7 +23,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/weather_sunny_yellow" />
+                app:srcCompat="@drawable/weather_sun" />
 
             <TextView
                 android:id="@+id/textViewCityAndCountry"
@@ -72,7 +72,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/imageViewRainfall"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/viewFirstHalfLine"
-                app:srcCompat="@drawable/weather_rainy" />
+                app:srcCompat="@drawable/weather_humidity" />
 
             <ImageView
                 android:id="@+id/imageViewRainfall"
@@ -82,7 +82,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/imageViewPressure"
                 app:layout_constraintStart_toEndOf="@+id/imageViewHumidity"
                 app:layout_constraintTop_toBottomOf="@+id/viewFirstHalfLine"
-                app:srcCompat="@drawable/water" />
+                app:srcCompat="@drawable/weather_rain" />
 
             <ImageView
                 android:id="@+id/imageViewPressure"
@@ -93,7 +93,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageViewRainfall"
                 app:layout_constraintTop_toBottomOf="@+id/viewFirstHalfLine"
-                app:srcCompat="@drawable/temperature_celsius" />
+                app:srcCompat="@drawable/weather_barometer" />
 
             <TextView
                 android:id="@+id/textViewHumidity"
@@ -130,7 +130,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/imageViewCompass"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewRainfall"
-                app:srcCompat="@drawable/weather_windy" />
+                app:srcCompat="@drawable/weather_wind" />
 
             <ImageView
                 android:id="@+id/imageViewCompass"
@@ -140,7 +140,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/imageViewWind"
                 app:layout_constraintTop_toBottomOf="@+id/textViewRainfall"
-                app:srcCompat="@drawable/compass_yellow" />
+                app:srcCompat="@drawable/weather_compass" />
 
             <TextView
                 android:id="@+id/textViewSpeedOfWind"
