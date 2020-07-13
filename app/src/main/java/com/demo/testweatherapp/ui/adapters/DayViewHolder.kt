@@ -1,4 +1,4 @@
-package com.demo.testweatherapp.adapters
+package com.demo.testweatherapp.ui.adapters
 
 import android.view.View
 import android.widget.ImageView
@@ -6,7 +6,8 @@ import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.testweatherapp.R
-import com.demo.testweatherapp.data.DataProviderManager
+import com.demo.testweatherapp.common.Utils
+import com.demo.testweatherapp.mvp.models.DataProviderManager
 import com.demo.testweatherapp.pojo.Info
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -22,9 +23,9 @@ class DayViewHolder(@NonNull itemView: View) : RecyclerView.ViewHolder(itemView)
 
     internal fun setDayDetails(info: Info) {
         txtDayOfWeek.text = getDayOfWeek(info.dt_txt.dropLast(9))
-        txtHour.text = DataProviderManager.getTime(info.dt_txt)
+        txtHour.text = Utils.getTime(info.dt_txt)
         txtWeatherDescription.text = info.weather[0].description.capitalize()
-        DataProviderManager.chooseImage(imgPicDayItem, info.weather[0].main, DataProviderManager.getTime(info.dt_txt))
+        Utils.chooseImage(imgPicDayItem, info.weather[0].main, Utils.getTime(info.dt_txt))
         txtTempDayItem.text = String.format("%s%s",(info.main.temp - 273.15).roundToInt().toString(), itemView.context.getString(R.string.temperatureMark))
     }
 
@@ -34,5 +35,4 @@ class DayViewHolder(@NonNull itemView: View) : RecyclerView.ViewHolder(itemView)
         val dayFormat: DateFormat = SimpleDateFormat(itemView.context.getString(R.string.dayFormat), Locale.ENGLISH)
         return dayFormat.format(date)
     }
-
 }

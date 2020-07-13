@@ -4,15 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.android.navigation.TodayFragment">
 
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:indeterminate="false"
+            android:layout_gravity="center" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/titleConstraint"
+            android:id="@+id/titleConstraintToday"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+
 
 
             <ImageView
@@ -190,4 +209,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+</RelativeLayout>
+
 </layout>

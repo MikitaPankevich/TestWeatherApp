@@ -1,4 +1,4 @@
-package com.demo.testweatherapp.adapters
+package com.demo.testweatherapp.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater

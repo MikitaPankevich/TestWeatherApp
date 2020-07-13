@@ -1,4 +1,4 @@
-package com.demo.testweatherapp.api
+package com.demo.testweatherapp.mvp.models.api
 
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -14,5 +14,6 @@ object ApiFactory {
         .baseUrl(BASE_URL)
         .build()
 
-    val apiService: ApiService = retrofit.create(ApiService::class.java)
+    val apiService: ApiService = retrofit.create(
+        ApiService::class.java)
 }

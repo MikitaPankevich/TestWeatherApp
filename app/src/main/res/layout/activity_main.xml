@@ -11,8 +11,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textViewTodayOrCity"
+
+
+        <EditText
+            android:id="@+id/editTextCity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
@@ -20,10 +22,21 @@
             android:textAlignment="center"
             android:textSize="28sp"
             android:textStyle="italic"
+            android:background="@android:color/transparent"
             app:layout_constraintBottom_toTopOf="@id/viewGradient"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imageViewSearch"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageViewSearch"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:layout_constraintBottom_toBottomOf="@id/editTextCity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="10dp"
+            app:srcCompat="@android:drawable/ic_menu_search"/>
 
         <View
             android:id="@+id/viewGradient"
@@ -31,7 +44,7 @@
             android:layout_height="1dp"
             android:background="@drawable/gradient_color"
             app:layout_constraintBottom_toTopOf="@id/myNavHostFragment"
-            app:layout_constraintTop_toBottomOf="@id/textViewTodayOrCity" />
+            app:layout_constraintTop_toBottomOf="@id/editTextCity" />
 
         <fragment
             android:id="@+id/myNavHostFragment"
@@ -50,55 +63,69 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorPrimaryDark"
-            app:layout_constraintBottom_toTopOf="@id/imageViewToday"
+            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
             app:layout_constraintTop_toBottomOf="@id/myNavHostFragment" />
 
-
-        <ImageView
-            android:id="@+id/imageViewToday"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:clickable="false"
-            app:layout_constraintBottom_toTopOf="@id/textViewToday"
-            app:layout_constraintEnd_toStartOf="@id/imageViewForecast"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/viewNonGradient"
-            app:srcCompat="@drawable/weather_today_blue" />
+            app:menu="@menu/bottom_navigation_menu" />
 
-        <ImageView
-            android:id="@+id/imageViewForecast"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            app:layout_constraintBottom_toTopOf="@id/textViewForecast"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/imageViewToday"
-            app:layout_constraintTop_toBottomOf="@id/viewNonGradient"
-            app:srcCompat="@drawable/weather_forecast_black" />
 
-        <TextView
-            android:id="@+id/textViewForecast"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:text="@string/forecast"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="@id/imageViewForecast"
-            app:layout_constraintRight_toRightOf="@id/imageViewForecast"
-            app:layout_constraintTop_toBottomOf="@id/imageViewForecast" />
 
-        <TextView
-            android:id="@+id/textViewToday"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-
-            android:text="@string/today"
-            android:textColor="@color/colorLightBlue"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="@id/imageViewToday"
-            app:layout_constraintRight_toRightOf="@id/imageViewToday"
-            app:layout_constraintTop_toBottomOf="@id/imageViewToday" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>
+
+
+<!--<ImageView-->
+<!--android:id="@+id/imageViewToday"-->
+<!--android:layout_width="30dp"-->
+<!--android:layout_height="30dp"-->
+<!--android:clickable="false"-->
+<!--app:layout_constraintBottom_toTopOf="@id/textViewToday"-->
+<!--app:layout_constraintEnd_toStartOf="@id/imageViewForecast"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toBottomOf="@id/viewNonGradient"-->
+<!--app:srcCompat="@drawable/weather_today_blue" />-->
+
+<!--<ImageView-->
+<!--android:id="@+id/imageViewForecast"-->
+<!--android:layout_width="30dp"-->
+<!--android:layout_height="30dp"-->
+<!--app:layout_constraintBottom_toTopOf="@id/textViewForecast"-->
+<!--app:layout_constraintEnd_toEndOf="parent"-->
+<!--app:layout_constraintStart_toEndOf="@id/imageViewToday"-->
+<!--app:layout_constraintTop_toBottomOf="@id/viewNonGradient"-->
+<!--app:srcCompat="@drawable/weather_forecast_black" />-->
+
+<!--<TextView-->
+<!--android:id="@+id/textViewForecast"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_margin="2dp"-->
+<!--android:text="@string/forecast"-->
+<!--app:layout_constraintBottom_toBottomOf="parent"-->
+<!--app:layout_constraintLeft_toLeftOf="@id/imageViewForecast"-->
+<!--app:layout_constraintRight_toRightOf="@id/imageViewForecast"-->
+<!--app:layout_constraintTop_toBottomOf="@id/imageViewForecast" />-->
+
+<!--<TextView-->
+<!--android:id="@+id/textViewToday"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_margin="2dp"-->
+
+<!--android:text="@string/today"-->
+<!--android:textColor="@color/colorLightBlue"-->
+<!--app:layout_constraintBottom_toBottomOf="parent"-->
+<!--app:layout_constraintLeft_toLeftOf="@id/imageViewToday"-->
+<!--app:layout_constraintRight_toRightOf="@id/imageViewToday"-->
+<!--app:layout_constraintTop_toBottomOf="@id/imageViewToday" />-->

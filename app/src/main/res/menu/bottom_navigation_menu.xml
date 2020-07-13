@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/page_Today"
+        android:enabled="true"
+        android:icon="@drawable/weather_today_blue"
+        android:title="@string/today"/>
+    <item
+        android:id="@+id/page_Forecast"
+        android:enabled="true"
+        android:icon="@drawable/weather_forecast_black"
+        android:title="@string/forecast"/>
+</menu>

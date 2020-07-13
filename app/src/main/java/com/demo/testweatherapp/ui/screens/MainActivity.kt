@@ -1,7 +1,9 @@
-package com.demo.testweatherapp.screens
+package com.demo.testweatherapp.ui.screens
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
@@ -9,36 +11,40 @@ import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.arellomobile.mvp.MvpAppCompatActivity
+import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.demo.testweatherapp.R
-import com.demo.testweatherapp.data.DataProviderManager
-import com.demo.testweatherapp.data.WeatherPresenter
-import com.demo.testweatherapp.data.WeatherView
 import com.demo.testweatherapp.databinding.ActivityMainBinding
+import com.demo.testweatherapp.mvp.models.DataProviderManager
+import com.demo.testweatherapp.mvp.presenters.MainPresenter
+import com.demo.testweatherapp.mvp.views.MainView
+import com.demo.testweatherapp.pojo.Base
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.Task
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 
-
-class MainActivity : AppCompatActivity(), WeatherView {
-
-    private var isStartFragment = true
+class MainActivity : MvpAppCompatActivity(), MainView {
 
 
     private lateinit var navController: NavController
-    private lateinit var presenter: WeatherPresenter
 
+    @InjectPresenter
+    internal lateinit var presenter: MainPresenter
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val REQUEST_CHECK_SETTINGS = 100
@@ -46,91 +52,82 @@ class MainActivity : AppCompatActivity(), WeatherView {
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = WeatherPresenter(this)
-        val binding =
-            DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         navController = Navigation.findNavController(this, R.id.myNavHostFragment)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult ?: return
                 for (location in locationResult.locations) {
                     presenter.loadData(location.latitude, location.longitude)
-                    Log.d("TEST_LOC", location.toString())
-                    if (navController.currentDestination?.label.toString() == "fragment_loading" && DataProviderManager.base != null) {
-                        stopLocationUpdates()
-                        imageViewForecast.isClickable = true
-                        navController.navigate(R.id.action_loadingFragment2_to_todayFragment)
-                    }
                 }
             }
         }
         checkPermission()
         createLocationRequest()
-
-        binding.imageViewForecast.setOnClickListener {
-            navController.navigate(R.id.action_todayFragment_to_forecastFragment)
-            changeFragment()
-        }
-        binding.imageViewToday.setOnClickListener {
-            navController.navigate(R.id.action_forecastFragment_to_todayFragment)
-            changeFragment()
-        }
-        imageViewToday.isClickable = false
-        imageViewForecast.isClickable = false
-
-        getCity()
+        setBottomNavigationListener()
     }
 
+    private fun setBottomNavigationListener(){
+        bottom_navigation.setOnNavigationItemSelectedListener{
+            when(it.itemId) {
+                R.id.page_Today -> {
+                    if (navController.currentDestination?.label.toString() == "TodayFragment"){
+                        false
+                    }else {
+                        editTextCity.isEnabled = true
+                        imageViewSearch.visibility = View.VISIBLE
+                        navController.navigate(R.id.action_forecastFragment_to_todayFragment)
+                        true
+                    }
+                }
+                R.id.page_Forecast -> {
+                    if (navController.currentDestination?.label.toString() == "ForecastFragment"){
+                        false
+                    }else{
+                        editTextCity.isEnabled = false
+                        imageViewSearch.visibility = View.GONE
+                        navController.navigate(R.id.action_todayFragment_to_forecastFragment)
+                        true
+                    }
+                }
+                else -> false
+            }
+        }
 
-    fun getCity(){
+    }
+
+    @ProvidePresenter
+    fun providePresenter(): MainPresenter {
+        return MainPresenter(this)
+    }
+
+    private fun getCity(location: String){
         if (Geocoder.isPresent()) {
             try {
-                val location = "Minsk"
                 val gc = Geocoder(this)
-                val addresses: List<Address> =
-                    gc.getFromLocationName(location, 1) // get the found Address Objects
-                val ll: MutableList<LatLng> =
-                    ArrayList<LatLng>(addresses.size) // A list to save the coordinates if they are available
+                val addresses: List<Address> = gc.getFromLocationName(location, 1)
+                val ll: MutableList<LatLng> = ArrayList(addresses.size)
                 for (a in addresses) {
                     if (a.hasLatitude() && a.hasLongitude()) {
                         ll.add(LatLng(a.latitude, a.longitude))
                     }
                 }
-                Log.d("TEST_CITY", ll.toString())
+                presenter.loadData(ll[0].latitude, ll[0].longitude)
+                refresh()
             } catch (e: IOException) {
+                @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
                 Log.d("TEST_CITY", e.message)
             }
         }
     }
 
-
-    private fun changeFragment() {
-        if (isStartFragment) {
-            textViewTodayOrCity.text = DataProviderManager.base?.city?.name
-            textViewToday.setTextColor(resources.getColor(R.color.black))
-            textViewForecast.setTextColor(resources.getColor(R.color.colorLightBlue))
-            Picasso.get().load(R.drawable.weather_today_black).into(imageViewToday)
-            Picasso.get().load(R.drawable.weather_forecast_blue).into(imageViewForecast)
-            imageViewForecast.isClickable = false
-            imageViewToday.isClickable = true
-            isStartFragment = false
-        } else {
-            textViewTodayOrCity.text = getString(R.string.today)
-            textViewToday.setTextColor(resources.getColor(R.color.colorLightBlue))
-            textViewForecast.setTextColor(resources.getColor(R.color.black))
-            Picasso.get().load(R.drawable.weather_today_blue).into(imageViewToday)
-            Picasso.get().load(R.drawable.weather_forecast_black).into(imageViewForecast)
-            imageViewForecast.isClickable = true
-            imageViewToday.isClickable = false
-            isStartFragment = true
-        }
+    private fun refresh() {
+        navController.popBackStack()
+        navController.navigate(R.id.todayFragment)
     }
-
 
     private fun checkPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
@@ -150,7 +147,7 @@ class MainActivity : AppCompatActivity(), WeatherView {
             REQUEST_CHECK_SETTINGS -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startLocationUpdates()
             } else {
-                Toast.makeText(this, getString(R.string.locationPermission), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.locationPermission), Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -189,14 +186,11 @@ class MainActivity : AppCompatActivity(), WeatherView {
                 }
             }
         }
-
-
     }
 
     private fun stopLocationUpdates() {
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
-
 
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
@@ -207,12 +201,38 @@ class MainActivity : AppCompatActivity(), WeatherView {
         )
     }
 
-    override fun showData() {
-        //imageViewForecast.isClickable = true
+    private fun checkData(){
+        if (DataProviderManager.base != null) {
+            stopLocationUpdates()
+            refresh()
+        }
     }
 
-    override fun showError() {
-        Toast.makeText(this, getString(R.string.loadDataError), Toast.LENGTH_LONG).show()
+    override fun showData(base: Base) {
+        checkData()
+        var location: String = base.city.name
+        editTextCity.setText(location)
+        editTextCity.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                location = s.toString()
+            }
+        })
+        imageViewSearch.setOnClickListener {
+            getCity(location)
+            it.hideKeyboard()
+            editTextCity.clearFocus()
+        }
+    }
+
+    private fun View.hideKeyboard() {
+        val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(windowToken, 0)
+    }
+
+    override fun showError(error: Int) {
+        Toast.makeText(this, getString(error), Toast.LENGTH_LONG).show()
     }
 
     override fun onResume() {

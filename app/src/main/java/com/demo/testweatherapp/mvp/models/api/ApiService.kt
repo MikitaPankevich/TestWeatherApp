@@ -1,4 +1,4 @@
-package com.demo.testweatherapp.api
+package com.demo.testweatherapp.mvp.models.api
 
 import com.demo.testweatherapp.pojo.Base
 import io.reactivex.Single

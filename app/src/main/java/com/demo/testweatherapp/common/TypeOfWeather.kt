@@ -1,4 +1,4 @@
-package com.demo.testweatherapp
+package com.demo.testweatherapp.common
 
 enum class TypeOfWeather(typeOfWeather: String) {
     Clear("Clear"), Clouds("Clouds"), Rain ("Rain"),

@@ -1,15 +1,21 @@
-package com.demo.testweatherapp.data
+package com.demo.testweatherapp.mvp.presenters
 
-import com.demo.testweatherapp.api.ApiFactory
-import com.demo.testweatherapp.pojo.Base
+import com.arellomobile.mvp.InjectViewState
+import com.arellomobile.mvp.MvpPresenter
+import com.demo.testweatherapp.R
+import com.demo.testweatherapp.mvp.models.DataProviderManager
+import com.demo.testweatherapp.mvp.models.api.ApiFactory
+import com.demo.testweatherapp.mvp.views.MainView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class WeatherPresenter(private val view: WeatherView) {
+
+@InjectViewState
+class MainPresenter(private val view: MainView) : MvpPresenter<MainView>() {
 
     private val compositeDisposable = CompositeDisposable()
-    lateinit var data: Base
+
 
     fun loadData(latitude: Double, longitude: Double) {
         val disposable = ApiFactory.apiService.getForecast(lat = latitude, lon = longitude)
@@ -17,16 +23,20 @@ class WeatherPresenter(private val view: WeatherView) {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 DataProviderManager.registerDataProvider(it)
-                view.showData()
+                view.showData(it)
             }, {
-                view.showError()
+                view.showError(R.string.loadDataError)
             })
+
         compositeDisposable.add(disposable)
+
     }
-    
-    fun disposeDisposable() {
+
+
+     fun disposeDisposable() {
         compositeDisposable.dispose()
     }
+
 
 
 }

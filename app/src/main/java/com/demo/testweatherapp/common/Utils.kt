@@ -1,25 +1,16 @@
-package com.demo.testweatherapp.data
+package com.demo.testweatherapp.common
 
 import android.widget.ImageView
 import com.demo.testweatherapp.R
-import com.demo.testweatherapp.TypeOfWeather
-import com.demo.testweatherapp.pojo.Base
 import com.squareup.picasso.Picasso
 
-object DataProviderManager {
-
-    var base: Base? = null
-
-    fun registerDataProvider(base: Base) {
-        DataProviderManager.base = base
-    }
-
+object Utils {
     fun chooseImage(imageView: ImageView, weather: String?, time: String) {
         //from 03:00 to 03
         val time: Int = time.dropLast(3).toInt()
         when (weather) {
             TypeOfWeather.Clear.name -> if (time in 6..20) Picasso.get().load(R.drawable.weather_sun).into(imageView)
-             else Picasso.get().load(R.drawable.weather_moon).into(imageView)
+            else Picasso.get().load(R.drawable.weather_moon).into(imageView)
 
             TypeOfWeather.Clouds.name -> if (time in 6..20) Picasso.get().load(R.drawable.weather_clouds_sun).into(imageView)
             else Picasso.get().load(R.drawable.weather_cloudy_night).into(imageView)
@@ -29,7 +20,7 @@ object DataProviderManager {
             TypeOfWeather.Thunderstorm.name -> Picasso.get().load(R.drawable.weather_thunderstorm).into(imageView)
             TypeOfWeather.Snow.name -> Picasso.get().load(R.drawable.weather_snow).into(imageView)
             else -> Picasso.get().load(R.drawable.weather_fog).into(imageView)
-            }
+        }
     }
 
 
@@ -37,5 +28,4 @@ object DataProviderManager {
         //return from "2017-01-31 03:00:00" to "03:00"
         return date.drop(11).dropLast(3)
     }
-
 }
