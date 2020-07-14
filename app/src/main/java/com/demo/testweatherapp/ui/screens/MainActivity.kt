@@ -61,6 +61,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult ?: return
                 for (location in locationResult.locations) {
+                    Log.d("TEST_LOC",location.latitude.toString()+" "+ location.longitude.toString() )
                     presenter.loadData(location.latitude, location.longitude)
                 }
             }
@@ -125,8 +126,12 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     private fun refresh() {
-        navController.popBackStack()
-        navController.navigate(R.id.todayFragment)
+        if (navController.currentDestination?.label.toString() == "ForecastFragment") {
+            navController.navigate(R.id.forecastFragment)
+        }else{
+            navController.navigate(R.id.todayFragment)
+        }
+
     }
 
     private fun checkPermission() {
@@ -193,7 +198,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     @SuppressLint("MissingPermission")
-    private fun startLocationUpdates() {
+    fun startLocationUpdates() {
         fusedLocationClient.requestLocationUpdates(
             locationRequest,
             locationCallback,

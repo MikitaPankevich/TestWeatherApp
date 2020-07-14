@@ -5,5 +5,5 @@ import com.demo.testweatherapp.pojo.Base
 
 interface ForecastView: MvpView {
     fun showData(base: Base)
-    fun showError(error: String)
+
 }

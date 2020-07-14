@@ -10,9 +10,7 @@ class ForecastPresenter (private val view: ForecastView) : MvpPresenter<Forecast
     fun loadData(){
         if (DataProviderManager.base != null){
             DataProviderManager.base?.let { view.showData(it) }
-        } else {
-            view.showError("Error")
         }
-
     }
+
 }

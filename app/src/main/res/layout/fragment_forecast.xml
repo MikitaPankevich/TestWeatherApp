@@ -4,11 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.android.navigation.ForecastFragment">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/itemsSwipeToRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewFragmentForecast"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </layout>

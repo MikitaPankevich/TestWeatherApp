@@ -16,7 +16,6 @@ class MainPresenter(private val view: MainView) : MvpPresenter<MainView>() {
 
     private val compositeDisposable = CompositeDisposable()
 
-
     fun loadData(latitude: Double, longitude: Double) {
         val disposable = ApiFactory.apiService.getForecast(lat = latitude, lon = longitude)
             .subscribeOn(Schedulers.io())
@@ -27,17 +26,12 @@ class MainPresenter(private val view: MainView) : MvpPresenter<MainView>() {
             }, {
                 view.showError(R.string.loadDataError)
             })
-
         compositeDisposable.add(disposable)
-
     }
-
 
      fun disposeDisposable() {
         compositeDisposable.dispose()
     }
-
-
 
 }
 

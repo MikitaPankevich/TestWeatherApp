@@ -1,9 +1,12 @@
 package com.demo.testweatherapp.mvp.views
 
+import android.content.Intent
 import com.arellomobile.mvp.MvpView
 import com.demo.testweatherapp.pojo.Base
 
 interface TodayView: MvpView {
     fun showData(base: Base)
-    fun showError(error: String)
+    fun hideScreen()
+    fun showScreen()
+    fun createShareIntent(base: Base)
 }
