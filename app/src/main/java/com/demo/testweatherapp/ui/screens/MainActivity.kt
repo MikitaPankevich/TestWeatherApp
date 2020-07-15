@@ -114,8 +114,13 @@ class MainActivity : MvpAppCompatActivity(), MainView {
                         ll.add(LatLng(a.latitude, a.longitude))
                     }
                 }
-                presenter.loadData(ll[0].latitude, ll[0].longitude)
-                refresh()
+                if (ll.isNotEmpty()){
+                    presenter.loadData(ll[0].latitude, ll[0].longitude)
+                    refresh()
+                } else{
+                    Toast.makeText(this, "That city does not exist", Toast.LENGTH_SHORT).show()
+                }
+
             } catch (e: IOException) {
                 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
                 Log.d("TEST_CITY", e.message)
