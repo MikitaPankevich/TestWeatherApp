@@ -252,6 +252,17 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         super.onDestroy()
         presenter.disposeDisposable()
     }
+
+    override fun onBackPressed() {
+        if(navController.currentDestination?.label.toString() == "ForecastFragment"){
+            bottom_navigation.selectedItemId = R.id.page_Today
+        }else if(navController.currentDestination?.label.toString() == "TodayFragment"){
+            finishAffinity()
+            finish()
+        }
+    }
+
+
 }
 
 

@@ -11,7 +11,11 @@
         android:label="TodayFragment">
         <action
             android:id="@+id/action_todayFragment_to_forecastFragment"
-            app:destination="@id/forecastFragment" />
+            app:destination="@id/forecastFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit"/>
     </fragment>
     <fragment
         android:id="@+id/forecastFragment"
@@ -19,6 +23,10 @@
         android:label="ForecastFragment">
         <action
             android:id="@+id/action_forecastFragment_to_todayFragment"
-            app:destination="@id/todayFragment" />
+            app:destination="@id/todayFragment"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit"/>
     </fragment>
 </navigation>
