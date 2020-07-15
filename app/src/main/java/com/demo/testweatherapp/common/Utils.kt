@@ -1,8 +1,12 @@
 package com.demo.testweatherapp.common
 
+import android.annotation.SuppressLint
 import android.widget.ImageView
 import com.demo.testweatherapp.R
 import com.squareup.picasso.Picasso
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 object Utils {
     fun chooseImage(imageView: ImageView, weather: String?, time: String) {
@@ -23,10 +27,22 @@ object Utils {
         }
     }
 
+     @SuppressLint("SimpleDateFormat")
+     fun getDayOfWeek(data: String): String {
+        // from 2017-03-31 to Monday
+        val date: Date = SimpleDateFormat("yyyy-MM-dd").parse(data)
+        val dayFormat: DateFormat = SimpleDateFormat("EEEE", Locale.ENGLISH)
+        return dayFormat.format(date)
+    }
 
     fun getTime(date: String): String {
         //return from "2017-01-31 03:00:00" to "03:00"
         return date.drop(11).dropLast(3)
+    }
+
+    fun getDate(date: String): String{
+        //return from "2017-01-31 03:00:00" to "2017-01-31"
+        return date.dropLast(9)
     }
 
     fun chooseDirection(degree: Int): String{

@@ -22,17 +22,10 @@ class DayViewHolder(@NonNull itemView: View) : RecyclerView.ViewHolder(itemView)
     private val txtTempDayItem: TextView = itemView.findViewById(R.id.textViewTemperatureDayItem)
 
     internal fun setDayDetails(info: Info) {
-        txtDayOfWeek.text = getDayOfWeek(info.dt_txt.dropLast(9))
+        txtDayOfWeek.text = Utils.getDayOfWeek(Utils.getDate(info.dt_txt))
         txtHour.text = Utils.getTime(info.dt_txt)
         txtWeatherDescription.text = info.weather[0].description.capitalize()
         Utils.chooseImage(imgPicDayItem, info.weather[0].main, Utils.getTime(info.dt_txt))
         txtTempDayItem.text = String.format("%s%s",(info.main.temp - 273.15).roundToInt().toString(), itemView.context.getString(R.string.temperatureMark))
-    }
-
-    private fun getDayOfWeek(data: String): String {
-        // from 2017-03-31 to Monday
-        val date: Date = SimpleDateFormat(itemView.context.getString(R.string.dateFormat)).parse(data)
-        val dayFormat: DateFormat = SimpleDateFormat(itemView.context.getString(R.string.dayFormat), Locale.ENGLISH)
-        return dayFormat.format(date)
     }
 }

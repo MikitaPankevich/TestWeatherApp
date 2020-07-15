@@ -8,8 +8,7 @@ import com.demo.testweatherapp.R
 import com.demo.testweatherapp.pojo.Info
 
 
-class DayInfoAdapter(private val context: Context?, info: List<Info>) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DayInfoAdapter(private val context: Context?, info: List<Info>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val  TYPE_DAY = 1
     private val TYPE_HOURS = 2

@@ -8,7 +8,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.testweatherapp.R
 import com.demo.testweatherapp.common.Utils
-import com.demo.testweatherapp.mvp.models.DataProviderManager
 import com.demo.testweatherapp.pojo.Info
 import kotlin.math.roundToInt
 

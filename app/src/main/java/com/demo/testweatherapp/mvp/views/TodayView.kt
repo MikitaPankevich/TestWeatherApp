@@ -1,6 +1,5 @@
 package com.demo.testweatherapp.mvp.views
 
-import android.content.Intent
 import com.arellomobile.mvp.MvpView
 import com.demo.testweatherapp.pojo.Base
 

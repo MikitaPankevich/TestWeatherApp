@@ -10,7 +10,6 @@ import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.demo.testweatherapp.R
-import com.demo.testweatherapp.common.CardinalDirections
 import com.demo.testweatherapp.common.Utils
 import com.demo.testweatherapp.mvp.presenters.TodayPresenter
 import com.demo.testweatherapp.mvp.views.TodayView
@@ -90,7 +89,4 @@ class TodayFragment : MvpAppCompatFragment(), TodayView {
             textViewCompassDirection.text = Utils.chooseDirection(list[0].wind.deg)
         }
     }
-
-
-
 }

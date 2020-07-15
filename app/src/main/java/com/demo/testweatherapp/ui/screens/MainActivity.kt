@@ -2,7 +2,6 @@ package com.demo.testweatherapp.ui.screens
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
@@ -97,7 +96,6 @@ class MainActivity : MvpAppCompatActivity(), MainView {
                 else -> false
             }
         }
-
     }
 
     @ProvidePresenter

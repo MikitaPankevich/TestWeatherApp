@@ -1,6 +1,5 @@
 package com.demo.testweatherapp.mvp.presenters
 
-import android.content.Intent
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.demo.testweatherapp.mvp.models.DataProviderManager
