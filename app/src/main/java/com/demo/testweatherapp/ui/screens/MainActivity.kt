@@ -13,7 +13,9 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -25,6 +27,8 @@ import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.demo.testweatherapp.R
+import com.demo.testweatherapp.common.Months
+import com.demo.testweatherapp.common.Utils
 import com.demo.testweatherapp.databinding.ActivityMainBinding
 import com.demo.testweatherapp.mvp.models.DataProviderManager
 import com.demo.testweatherapp.mvp.presenters.MainPresenter
@@ -218,8 +222,10 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     override fun showData(base: Base) {
         checkData()
-        var location: String = base.city.name
+        var location: String = base.city.name+", "+base.city.country
         editTextCity.setText(location)
+        editTextCity.setImeActionLabel("Enter", KeyEvent.KEYCODE_ENTER)
+        editTextCity.imeOptions = EditorInfo.IME_ACTION_DONE
         editTextCity.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -227,6 +233,14 @@ class MainActivity : MvpAppCompatActivity(), MainView {
                 location = s.toString()
             }
         })
+        editTextCity.setOnKeyListener(
+            View.OnKeyListener{v, keyCode, event ->
+                if (keyCode == KeyEvent.KEYCODE_ENTER || keyCode==EditorInfo.IME_ACTION_DONE){
+                    getCity(location)
+                    return@OnKeyListener true
+                }
+                false
+            })
         imageViewSearch.setOnClickListener {
             getCity(location)
             it.hideKeyboard()

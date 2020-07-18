@@ -24,5 +24,6 @@ class HoursViewHolder(@NonNull itemView: View) : RecyclerView.ViewHolder(itemVie
         txtCurrentWeather.text = info.weather[0].description.capitalize()
         Utils.chooseImage(imgWeatherPic, info.weather[0].main, Utils.getTime(info.dt_txt))
         viewLine.isVisible = Utils.getTime(info.dt_txt) != itemView.context.getString(R.string.timeBeforeDayOfWeek)
+
     }
 }

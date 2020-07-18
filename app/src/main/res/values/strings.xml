@@ -23,5 +23,6 @@
     <string name="alertTitle">Check weather updates</string>
     <string name="alertPositiveButtonText">OK</string>
     <string name="alertNoChanges">No changes for today</string>
+    <string name="feels_like">Feels like: %s°</string>
 
 </resources>

@@ -78,8 +78,7 @@ class TodayFragment : MvpAppCompatFragment(), TodayView {
        with(base) {
             val description: String? = list[0].weather[0].description
             Utils.chooseImage(imageViewWeatherPicture, list[0].weather[0].main, Utils.getTime(list[0].dt_txt))
-            if (city.name != null && city.country != null) textViewCityAndCountry.text = "%s, %s".format(city.name, city.country)
-            else textViewCityAndCountry.text = getString(R.string.unknown)
+            textViewFeelsLike.text = getString(R.string.feels_like).format((list[0].main.feels_like-273.15).roundToInt().toString())
             textViewTemperatureAndWeather.text = "%s°C | %s".format((list[0].main.temp - 273.15).roundToInt().toString(), description?.capitalize())
             textViewHumidity.text = "%s %s".format(list[0].main.humidity.toString(), "%")
             if (list[0].rain != null) textViewRainfall.text = getString(R.string.rainfall).format(list[0].rain.humidity.toString())

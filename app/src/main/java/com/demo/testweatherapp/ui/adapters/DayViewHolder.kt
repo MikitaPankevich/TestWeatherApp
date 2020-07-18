@@ -3,6 +3,7 @@ package com.demo.testweatherapp.ui.adapters
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.testweatherapp.R
@@ -22,7 +23,7 @@ class DayViewHolder(@NonNull itemView: View) : RecyclerView.ViewHolder(itemView)
     private val txtTempDayItem: TextView = itemView.findViewById(R.id.textViewTemperatureDayItem)
 
     internal fun setDayDetails(info: Info) {
-        txtDayOfWeek.text = Utils.getDayOfWeek(Utils.getDate(info.dt_txt))
+        txtDayOfWeek.text =  String.format("%s, %s %s",Utils.getDayOfWeek(Utils.getDate(info.dt_txt)),Utils.getMonthByDate(Utils.getDate(info.dt_txt)), Utils.getDayByDate(Utils.getDate(info.dt_txt)))
         txtHour.text = Utils.getTime(info.dt_txt)
         txtWeatherDescription.text = info.weather[0].description.capitalize()
         Utils.chooseImage(imgPicDayItem, info.weather[0].main, Utils.getTime(info.dt_txt))

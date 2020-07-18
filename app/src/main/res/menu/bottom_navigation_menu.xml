@@ -3,11 +3,13 @@
     <item
         android:id="@+id/page_Today"
         android:enabled="true"
+        android:fontFamily="@font/merriweather_bold_italic"
         android:icon="@drawable/weather_today_blue"
         android:title="@string/today"/>
     <item
         android:id="@+id/page_Forecast"
         android:enabled="true"
+        android:fontFamily="@font/merriweather_bold_italic"
         android:icon="@drawable/weather_forecast_black"
         android:title="@string/forecast"/>
 </menu>

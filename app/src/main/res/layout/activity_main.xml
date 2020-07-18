@@ -11,14 +11,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-
         <EditText
             android:id="@+id/editTextCity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
+            android:maxLines="1"
+            android:lines="1"
+            android:maxLength="30"
+            android:textColor="@drawable/edit_text_selector"
             tools:text="Minsk"
+            android:inputType="textNoSuggestions"
+            android:fontFamily="@font/merriweather_bold_italic"
             android:textAlignment="center"
             android:textSize="28sp"
             android:textStyle="italic"
@@ -32,6 +36,7 @@
             android:id="@+id/imageViewSearch"
             android:layout_width="35dp"
             android:layout_height="35dp"
+            android:alpha="0.4"
             app:layout_constraintBottom_toBottomOf="@id/editTextCity"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -41,7 +46,7 @@
         <View
             android:id="@+id/viewGradient"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="2dp"
             android:background="@drawable/gradient_color"
             app:layout_constraintBottom_toTopOf="@id/myNavHostFragment"
             app:layout_constraintTop_toBottomOf="@id/editTextCity" />
