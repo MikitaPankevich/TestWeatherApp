@@ -17,12 +17,13 @@
     <string name="textToShare">"\n Current weather in %s \n Temperature: %s \n Humidity: %s \n Speed of wind: %s"</string>
     <string name="typeToShare">text/plain</string>
     <string name="locationPermission">App require location permission. Please turn on in Settings and try again.</string>
-    <string name="locationData">App require Location. Please turn on and restart.</string>
+    <string name="locationData">App require Location. Please turn on and try again.</string>
     <string name="loadDataError">Failed to load data. Please check Internet and try again.</string>
-    <string name="test">Load daa</string>
+    <string name="test">Load data</string>
     <string name="alertTitle">Check weather updates</string>
     <string name="alertPositiveButtonText">OK</string>
     <string name="alertNoChanges">No changes for today</string>
-    <string name="feels_like">Feels like: %s°</string>
+    <string name="feels_like">Feels like %s°</string>
+    <string name="humidity_hour_info">Humidity: %s%s</string>
 
 </resources>

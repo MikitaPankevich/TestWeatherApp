@@ -7,6 +7,7 @@
     <color name="black">#000000</color>
     <color name="lightBlackForDays">#433F4E</color>
     <color name="lightBlackForDescription">#453F3F</color>
+    <color name="lightBlackForAdditionalInfo">#727477</color>
     <color name="yellow">#FFCB3F</color>
     <color name="white">#FFFFFF</color>
     <color name="editText_enabled_color">#000000</color>

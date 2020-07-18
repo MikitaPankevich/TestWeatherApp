@@ -56,6 +56,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     private lateinit var locationRequest: LocationRequest
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         navController = Navigation.findNavController(this, R.id.myNavHostFragment)

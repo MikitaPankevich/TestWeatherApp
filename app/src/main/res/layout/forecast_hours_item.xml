@@ -11,8 +11,8 @@
 
         <ImageView
             android:id="@+id/imageViewForecastWeatherPicture"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_marginStart="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +23,7 @@
             android:id="@+id/textViewHours"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:textColor="@color/lightBlackForDescription"
             android:textSize="16sp"
@@ -46,16 +46,44 @@
             tools:text="Rain Showers" />
 
         <TextView
+            android:id="@+id/textViewWindHoursItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:textSize="12sp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/lightBlackForAdditionalInfo"
+            android:fontFamily="@font/merriweather_bold_italic"
+            app:layout_constraintStart_toEndOf="@+id/imageViewForecastWeatherPicture"
+            app:layout_constraintTop_toBottomOf="@id/textViewCurrentWeather"
+            tools:text="Wind: 16 km/h" />
+
+        <TextView
+            android:id="@+id/textViewHumidityHoursItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:textSize="12sp"
+            android:textColor="@color/lightBlackForAdditionalInfo"
+            android:fontFamily="@font/merriweather_bold_italic"
+            app:layout_constraintStart_toEndOf="@id/textViewWindHoursItem"
+            app:layout_constraintTop_toBottomOf="@id/textViewCurrentWeather"
+            tools:text="Humidity: 87%" />
+
+
+        <TextView
             android:id="@+id/textViewTemperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="5dp"
             android:paddingBottom="10dp"
             android:fontFamily="@font/merriweather_bold_italic"
             android:textColor="@color/colorLightBlue"
-            android:textSize="42sp"
+            android:textSize="46sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -68,7 +96,7 @@
             android:background="#83857C"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/textViewHours"
-            app:layout_constraintTop_toBottomOf="@id/textViewTemperature" />
+            app:layout_constraintTop_toBottomOf="@id/textViewWindHoursItem" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
